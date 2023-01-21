@@ -1,0 +1,59 @@
+﻿@model ML.Operaciones
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Operaciones</h2>
+
+<div class="container">
+    <p>En el modulo presente puede realizar la accion de seleccionar alguno de los alumnos registradas previamente</p>
+    @using (Html.BeginForm("Calculo", "Operaciones", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            <div class="col-md-3">
+                @Html.TextBoxFor(model => model.Numero, new { @class = "form-control" })
+            </div>
+            <div class="col-md-3">
+                @Html.TextBoxFor(model => model.Resultado, new { @class = "form-control", @disabled = "disabled" })
+            </div>
+            <div class="col-md-3">
+                @Html.TextBoxFor(model => model.Usuario.IdUsuario, new { @class = "form-control", @disabled = "disabled", @style = "display: none" })
+            </div>
+            @Html.HiddenFor(model => model.Usuario.IdUsuario)
+            <div class="col-md-3">
+                <input type="submit" value="Calcular" class="btn btn-success" />
+            </div>
+        </div>
+    }
+
+    <div class="row">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Eliminar</th>
+                    <th style="display: none">ID Operacion</th>
+                    <th scope="col">Numero</th>
+                    <th scope="col">Resultado</th>
+                    <th scope="col">Fecha - Hora</th>
+                </tr>
+            </thead>
+            <tbody>
+                @Html.HiddenFor(model => model.Operacioness)
+                @foreach (ML.Operaciones operaciones in Model.Operacioness)
+                {
+                    <tr>
+                        <td class="text-center"><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "Operaciones", new { IdOperaciones = operaciones.IdOperaciones, IdUsuario = operaciones.Usuario.IdUsuario })" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
+                        <td style="display: none">@operaciones.IdOperaciones</td>
+                        <td style="display: none">@operaciones.Usuario.IdUsuario</td>
+                        <td>@operaciones.Numero</td>
+                        <td>@operaciones.Resultado</td>
+                        <td>@operaciones.FechaHora</td>
+                    </tr>
+                    @Html.HiddenFor(model => model.IdOperaciones)
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

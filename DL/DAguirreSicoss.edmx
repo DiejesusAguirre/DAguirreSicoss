@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DAguirreSicossModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Operaciones">
+          <Key>
+            <PropertyRef Name="IdOperacion" />
+          </Key>
+          <Property Name="IdOperacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Numero" Type="varchar(max)" />
+          <Property Name="Resultado" Type="int" />
+          <Property Name="FechaHora" Type="datetime" />
+          <Property Name="IdUsuario" Type="int" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Usuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Operacion__IdUsu__1367E606">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Operaciones" Type="Self.Operaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Operaciones">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AddOperacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Numero" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Resultado" Type="int" Mode="In" />
+          <Parameter Name="IdUsuario" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AddUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteOperacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdOperacion" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ExisteNumero" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Numero" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="GetByIdUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUsuario" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetByNumero" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Numero" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="GetByUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="DAguirreSicossModelStoreContainer">
+          <EntitySet Name="Operaciones" EntityType="Self.Operaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Operacion__IdUsu__1367E606" Association="Self.FK__Operacion__IdUsu__1367E606">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Operaciones" EntitySet="Operaciones" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DAguirreSicossModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DAguirreSicossEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Usuarios" EntityType="DAguirreSicossModel.Usuario" />
+          <FunctionImport Name="AddUsuario">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteOperacion">
+          <Parameter Name="IdOperacion" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetByUsuario" ReturnType="Collection(DAguirreSicossModel.GetByUsuario_Result)">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Operaciones" EntityType="DAguirreSicossModel.Operacione" />
+          <AssociationSet Name="FK__Operacion__IdUsu__1367E606" Association="DAguirreSicossModel.FK__Operacion__IdUsu__1367E606">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Operacione" EntitySet="Operaciones" />
+          </AssociationSet>
+          <FunctionImport Name="AddOperacion">
+            <Parameter Name="Numero" Mode="In" Type="String" />
+            <Parameter Name="Resultado" Mode="In" Type="Int32" />
+            <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ExisteNumero" ReturnType="Collection(Int32)">
+          <Parameter Name="Numero" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetByNumero" ReturnType="Collection(DAguirreSicossModel.GetByNumero_Result)">
+          <Parameter Name="Numero" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetByIdUsuario" ReturnType="Collection(DAguirreSicossModel.GetByIdUsuario_Result)">
+            <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Usuario1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Operaciones" Relationship="DAguirreSicossModel.FK__Operacion__IdUsu__1367E606" FromRole="Usuario" ToRole="Operacione" />
+        </EntityType>
+        <ComplexType Name="GetByUsuario_Result">
+          <Property Type="Int32" Name="IdUsuario" Nullable="false" />
+          <Property Type="String" Name="Usuario" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <EntityType Name="Operacione">
+          <Key>
+            <PropertyRef Name="IdOperacion" />
+          </Key>
+          <Property Name="IdOperacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Numero" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Resultado" Type="Int32" />
+          <Property Name="FechaHora" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuario" Type="Int32" />
+          <NavigationProperty Name="Usuario" Relationship="DAguirreSicossModel.FK__Operacion__IdUsu__1367E606" FromRole="Operacione" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="FK__Operacion__IdUsu__1367E606">
+          <End Type="DAguirreSicossModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="DAguirreSicossModel.Operacione" Role="Operacione" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Operacione">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetByNumero_Result">
+          <Property Type="String" Name="Numero" Nullable="true" />
+          <Property Type="Int32" Name="Resultado" Nullable="true" />
+          <Property Type="Int32" Name="IdUsuario" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetByIdUsuario_Result">
+          <Property Type="Int32" Name="IdOperacion" Nullable="false" />
+          <Property Type="String" Name="Numero" Nullable="true" />
+          <Property Type="Int32" Name="Resultado" Nullable="true" />
+          <Property Type="DateTime" Name="FechaHora" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="IdUsuario" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DAguirreSicossModelStoreContainer" CdmEntityContainer="DAguirreSicossEntities">
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="DAguirreSicossModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Usuario1" ColumnName="Usuario" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AddUsuario" FunctionName="DAguirreSicossModel.Store.AddUsuario" />
+          <FunctionImportMapping FunctionImportName="DeleteOperacion" FunctionName="DAguirreSicossModel.Store.DeleteOperacion" />
+          <FunctionImportMapping FunctionImportName="GetByUsuario" FunctionName="DAguirreSicossModel.Store.GetByUsuario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DAguirreSicossModel.GetByUsuario_Result">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Operaciones">
+            <EntityTypeMapping TypeName="DAguirreSicossModel.Operacione">
+              <MappingFragment StoreEntitySet="Operaciones">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+                <ScalarProperty Name="Resultado" ColumnName="Resultado" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="IdOperacion" ColumnName="IdOperacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AddOperacion" FunctionName="DAguirreSicossModel.Store.AddOperacion" />
+          <FunctionImportMapping FunctionImportName="ExisteNumero" FunctionName="DAguirreSicossModel.Store.ExisteNumero" />
+          <FunctionImportMapping FunctionImportName="GetByNumero" FunctionName="DAguirreSicossModel.Store.GetByNumero">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DAguirreSicossModel.GetByNumero_Result">
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Resultado" ColumnName="Resultado" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetByIdUsuario" FunctionName="DAguirreSicossModel.Store.GetByIdUsuario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DAguirreSicossModel.GetByIdUsuario_Result">
+                <ScalarProperty Name="IdOperacion" ColumnName="IdOperacion" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Resultado" ColumnName="Resultado" />
+                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
